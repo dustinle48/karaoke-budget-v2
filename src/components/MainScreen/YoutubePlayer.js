@@ -1,14 +1,8 @@
 import React from 'react';
-import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player/youtube'
 import { socket } from '../../context/socket';
 
 const YoutubePlayer = ({song,connectedRoom}) => {
-    const opts = {
-        playerVars: {
-            autoplay: 1,
-        }
-    }
-
     const handleOnEnd = () => {
         socket.emit("next-song", connectedRoom)
     }
@@ -16,10 +10,11 @@ const YoutubePlayer = ({song,connectedRoom}) => {
     return (
         <>
         { song &&
-        <YouTube
-            videoId={song.videoid}
-            onEnd={handleOnEnd}
-            opts={opts}
+        <ReactPlayer
+            url={`https://www.youtube.com/embed/${song.videoid}?autoplay=1`}
+            controls={true}
+            playing
+            onEnded={handleOnEnd}
         />
         }
         </>
